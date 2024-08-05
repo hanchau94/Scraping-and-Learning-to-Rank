@@ -10,26 +10,31 @@ We invite you to explore our codebase.
 - [Model Traning](#model-training)
 - [Installation](#installation)
 - [Data](#data)
-- [Usage](#usage)
+- [Evaluation](#evaluation)
 
 ## Web Scraping
 - Data was scraped from various FAQ sections of Stevens' website, such as Housing and Dining, OPT, New Student Orientation, and more.
-- Functions were created to handle different HTML structures for accurate data extraction.
+- <a herf="https://github.com/hanchau94/Scraping-and-Learning-to-Rank/tree/main/Experiment/python">Functions</a> were created to handle different HTML structures for accurate data extraction.
 - The scraped data was saved into a CSV file named Dataset_Scraping.csv, organized with an additional "Category" column.
 
 ## Model Training
-
 - Text data was tokenized and vectorized using TfidfVectorizer.
-- Machine learning models including SVM and BLSTM were trained using the 'Learning to Rank - Pointwise' approach. We will combine to the random forest model in 4 machine learning models to classify where the query's category is belong and then we retrieve top reponse from that category.
+  - <a herf="https://github.com/hanchau94/Scraping-and-Learning-to-Rank/tree/main/Experiment/python"> **tokenize()**</a> function to extract the unigram (more than 2 letters) or bigram token. The unigram still keep font after remove punctual such as “I-20”, “can’t”, or “Steven’s”
+  - The cosine similarity between the questions and answers from <a herf="https://github.com/hanchau94/Scraping-and-Learning-to-Rank/tree/main/Experiment/python">**assess_similarity()**</a> function.
+  - We find the tf-idf matrix by TfidfVectorizer() from scikit-learn.
+- Machine learning models including <a herf="https://github.com/hanchau94/Scraping-and-Learning-to-Rank/tree/main/Experiment/python"> SVM</a> and <a herf=https://github.com/hanchau94/Scraping-and-Learning-to-Rank/tree/main/Experiment/python>BiLSTM</a> were trained using the <a herf = "https://en.wikipedia.org/wiki/Learning_to_rank">'Learning to Rank - Pointwise'</a> approach. We combine these models with a Random Forest model to classify the query's category and retrieve the top response from that category.
 
 ## Installation
 Install the following required libraries:
-- BeautifulSoup, requests, and <a href="https://selenium-python.readthedocs.io/installation.html"> webdriver </a> (for Web Scraping).
-- re, gensim, ntlk, spicy, and naw.
+- BeautifulSoup, requests, and <a href="https://selenium-python.readthedocs.io/installation.html"> webdriver </a> (for web scraping).
+- ```re```, ```gensim```, ```ntlk```, ```spicy```, and ```naw```.
 - Scikit-learn
 - <a href = "https://www.tensorflow.org/install"> TensorFlow </a>
 
 ## Data
-- To enhance the size of our dataset and improve the accuracy of our model, we employed data augmenta- tion techniques. Specifically, we utilized methods such as synonym replacements and random insertions to generate additional variations of the existing question-answer pairs.
-- Overall, data augmentation proved to be a beneficial approach in enhancing the size and diversity of our dataset, which in turn improved the performance of our chatbot.
-- We created a new dataset to predict if the question and answer are paired, where each question has three answers: one answer with a corresponding label of 1 and two randomly selected answers with corresponding label of 0.
+- To enhance the size of our dataset and improve the accuracy of our model, we employed <a herf = "https://github.com/hanchau94/Scraping-and-Learning-to-Rank/tree/main/Experiment/python"> data augmentation techniques </a>. Specifically, including synonym replacements and random insertions to generate additional variations of existing question-answer pairs.
+- A new dataset was created to predict if a question and answer are paired, with each question having three answers: one correct (label 1) and two randomly selected (label 0).
+
+## Evaluation
+- We evaluate the models using AUC and PRC scores.
+- The performance of retrieved documents is assessed based on top-1, top-3, and top-5 answers for cases with and without stop-word removal. Removing stop-words consistently provides better performance.
